@@ -53,7 +53,7 @@ BONUS_CODES = {
 
 # MySQL ulanish funksiyasi
 def get_db_connection():
-    return mysql.connector.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
+    return mysql.connector.connect(host=DB_HOST, port=int(os.getenv("DB_PORT")),user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
 
 # Kanal obunasini tekshirish
 async def check_subscription(user_id):
