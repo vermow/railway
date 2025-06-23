@@ -81,10 +81,12 @@ def main_menu():
 
 
 def import_backup_sql():
+    conn = None
+    cursor = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        # backup.sql faylini o‘qish
+
         backup_file_path = "/app/backup.sql"
         if not os.path.exists(backup_file_path):
             print("backup.sql fayli topilmadi!")
@@ -93,22 +95,25 @@ def import_backup_sql():
         with open(backup_file_path, 'r', encoding='utf-8') as file:
             sql_script = file.read()
 
-        # SQL buyruqlarini alohida qismlarga bo‘lish
         sql_commands = sql_script.split(';')
 
-        # Har bir buyruqni bajarish
         for command in sql_commands:
             command = command.strip()
             if command:
                 cursor.execute(command)
 
         conn.commit()
-        print("backup.sql fayli muvaffaqiyatli import qilindi!")
+        print("✅ backup.sql fayli muvaffaqiyatli import qilindi!")
+
     except Exception as e:
-        print(f"backup.sql import qilishda xatolik: {e}")
+        print(f"❌ backup.sql import qilishda xatolik: {e}")
+
     finally:
-        cursor.close()
-        conn.close()
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
+
 
 # Ortga qaytish tugmasi
 def back_to_main_menu():
