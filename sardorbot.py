@@ -80,39 +80,39 @@ def main_menu():
     )
 
 
-def import_backup_sql():
-    conn = None
-    cursor = None
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
+# def import_backup_sql():
+#     conn = None
+#     cursor = None
+#     try:
+#         conn = get_db_connection()
+#         cursor = conn.cursor()
 
-        backup_file_path = "/app/backup.sql"
-        if not os.path.exists(backup_file_path):
-            print("backup.sql fayli topilmadi!")
-            return
+#         backup_file_path = "/app/backup.sql"
+#         if not os.path.exists(backup_file_path):
+#             print("backup.sql fayli topilmadi!")
+#             return
 
-        with open(backup_file_path, 'r', encoding='utf-8') as file:
-            sql_script = file.read()
+#         with open(backup_file_path, 'r', encoding='utf-8') as file:
+#             sql_script = file.read()
 
-        sql_commands = sql_script.split(';')
+#         sql_commands = sql_script.split(';')
 
-        for command in sql_commands:
-            command = command.strip()
-            if command:
-                cursor.execute(command)
+#         for command in sql_commands:
+#             command = command.strip()
+#             if command:
+#                 cursor.execute(command)
 
-        conn.commit()
-        print("✅ backup.sql fayli muvaffaqiyatli import qilindi!")
+#         conn.commit()
+#         print("✅ backup.sql fayli muvaffaqiyatli import qilindi!")
 
-    except Exception as e:
-        print(f"❌ backup.sql import qilishda xatolik: {e}")
+#     except Exception as e:
+#         print(f"❌ backup.sql import qilishda xatolik: {e}")
 
-    finally:
-        if cursor is not None:
-            cursor.close()
-        if conn is not None:
-            conn.close()
+#     finally:
+#         if cursor is not None:
+#             cursor.close()
+#         if conn is not None:
+#             conn.close()
 
 
 # Ortga qaytish tugmasi
@@ -876,7 +876,7 @@ async def approve_withdrawal(call: CallbackQuery):
         await call.answer("❌ Siz admin emassiz!", show_alert=True)
                 
 async def main():
-    import_backup_sql()  # Yangi qator
+    # import_backup_sql()  # Yangi qator
     create_referal_table()  
     await dp.start_polling(bot)
 
